@@ -40,3 +40,30 @@ class HouseDao(BaseDao):
         return self.fetchall()
         pass
     pass
+
+    def statisticBuildingAreaAvgPrice(self):
+        sql = "SELECT elt(interval(meanarea,0,50,100,150,200,250,300,400)," \
+              "'0-50平米'," \
+              "'50-100平米'," \
+              "'100-150平米'," \
+              "'150-200平米'," \
+              "'200-250平米'," \
+              "'250-300平米'," \
+              "'300-400平米'," \
+              "'400+平米') " \
+              "as mianjiqujian," \
+              "avg(unitprice) as up " \
+              "FROM t_lp " \
+              "group by mianjiqujian " \
+              "order by field(mianjiqujian," \
+              "'0-50平米'," \
+              "'50-100平米'," \
+              "'100-150平米'," \
+              "'150-200平米'," \
+              "'200-250平米'," \
+              "'250-300平米'," \
+              "'300-400平米'," \
+              "'400+平米');"
+        self.execute(sql, ret='dict')
+        return self.fetchall()
+        pass

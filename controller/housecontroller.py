@@ -68,3 +68,11 @@ def getmeanprice():
 
     return jsonify(data)
     pass
+
+@housecontroller.route('/getbuildingareaavgprice', methods=['GET', 'POST'])
+def getBuildingAreaAvgPrice():
+    # 方法接受的是AJAX请求
+    houseDao = HouseDao()
+    data = houseDao.statisticBuildingAreaAvgPrice()
+    return json.dumps(data, cls=DecimalEncoder)  # 加上cls=DecimalEncoder引用DecimalEncouder
+    pass
