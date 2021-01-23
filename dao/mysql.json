@@ -1,8 +1,1 @@
-{
-  "host": "localhost",
-  "user": "xzw",
-  "password": "NiCai123!",
-  "database": "aitest",
-  "port": 3306,
-  "charset": "utf8"
-}
+{"host":"localhost", "user":"root", "password":"admin", "database":"db_ai_test", "port":3306, "charset": "utf8"}

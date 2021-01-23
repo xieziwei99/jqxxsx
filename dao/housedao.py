@@ -32,3 +32,11 @@ class HouseDao(BaseDao):
         sql = f'select count(*) as num, province from (select * from t_lp group by link) as lp_distinct group by province;'
         self.execute(sql, ret='dict')
         return self.fetchall()
+
+    #各城市平均新房房价
+    def statisticHouseAvgSalaryByCity(self):
+        sql='select city,avg(unitprice) as s from t_lp group by city;'
+        self.execute(sql, ret='dict')
+        return self.fetchall()
+        pass
+    pass
