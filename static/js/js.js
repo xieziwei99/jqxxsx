@@ -59,7 +59,7 @@
                     },
                     xAxis: [{
                         type: 'category',
-                        name:'城市',
+                        name: '城市',
                         nameTextStyle: {
                             color: "#ffffff"
                         },
@@ -85,7 +85,7 @@
                                 color: "#ffffff",
                                 fontSize: '12',
                             },
-                            rotate:90,
+                            rotate: 90,
                         },
                     }],
                     yAxis: [{
@@ -339,53 +339,19 @@
     }
 
     function echarts_4() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart4'));
-
-        option = {
-            title: {
-                text: '不同职位数量对比',
-                left: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['Java', '大数据', 'Python', '人工智能', 'Web']
-            },
-            series: [
-                {
-                    name: '访问来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        {value: 335, name: 'Java'},
-                        {value: 310, name: '大数据'},
-                        {value: 234, name: 'Python'},
-                        {value: 135, name: '人工智能'},
-                        {value: 1548, name: 'Web'}
-                    ],
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(ee, ee, ee, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize", function () {
-            myChart.resize();
-        });
+        let url = '/house/getHouseNumberOfProvince';
+        fetch(url)
+            .then(resp => resp.json())
+            .then(json => {
+                let x = [];
+                let y = [];
+                json.forEach(o => {
+                    x.push(o["province"]);
+                    y.push(o["num"])
+                })
+                bar(x, y)
+            })
+            .catch(e => console.log(`fetch出错\n url：${url}\n 错误信息：${e}`));
     }
 
     function echarts_6() {
@@ -707,6 +673,53 @@
         window.addEventListener("resize", function () {
             myChart.resize();
         });
+    }
+
+    function bar(x, y) {
+        // 基于准备好的dom，初始化echarts实例
+        let titleDiv = document.querySelector("#title_echart4");
+        titleDiv.textContent = "各省市提供的新房数量"
+        var myChart = echarts.init(document.getElementById('echart4'));
+
+        let option = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: x,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '新房数量',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: y
+                }
+            ]
+        };
+        myChart.setOption(option);
+        window.addEventListener("resize", () => myChart.resize());
     }
 })
 

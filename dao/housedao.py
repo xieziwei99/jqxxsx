@@ -6,7 +6,7 @@ class HouseDao(BaseDao):
         # sql = "select city as cityname,round(avg(unitprice),2) as avghouseprice from db_py_qiyeshixun.t_lp " \
         #       "where unitprice > 2000 and unitprice <500000 group by city order by avghouseprice desc limit 0,200000"
         sql = "select cityname,avghouseprice from (select city as cityname,round(avg(unitprice),2) as avghouseprice " \
-              "from db_py_qiyeshixun.t_lp where unitprice > 2000 and unitprice <500000 group by city " \
+              "from t_lp where unitprice > 2000 and unitprice <500000 group by city " \
               "order by avghouseprice desc limit 0,200000) as a where avghouseprice > 19000"
         self.execute(sql, ret='dict')
         return self.fetchall()
@@ -15,7 +15,7 @@ class HouseDao(BaseDao):
     # 各省会平均住房面积 包括北上天重四直辖市 不包含澳门、台湾台北、香港 总共31个城市
     def statisticProvincialCapitalAvgHouseArea(self):
         sql = 'select province,cityname,avghousearea from (select province,city as cityname,round(avg(meanarea),2) ' \
-              'as avghousearea from db_py_qiyeshixun.t_lp where meanarea > 0 and higharea/lowarea < 10 group by city ' \
+              'as avghousearea from t_lp where meanarea > 0 and higharea/lowarea < 10 group by city ' \
               'order by avghousearea desc limit 0,200000) as a where cityname = "哈尔滨" or cityname = "长春" ' \
               'or cityname = "沈阳" or cityname = "石家庄" or cityname = "兰州" or cityname = "西宁" or cityname = "西安" ' \
               'or cityname = "郑州" or cityname = "济南" or cityname = "太原" or cityname = "合肥" or cityname = "武汉" ' \
@@ -26,3 +26,9 @@ class HouseDao(BaseDao):
         self.execute(sql, ret='dict')
         return self.fetchall()
         pass
+
+    # 各省市提供的新房数量
+    def getHouseNumberOfProvince(self):
+        sql = f'select count(*) as num, province from (select * from t_lp group by link) as lp_distinct group by province;'
+        self.execute(sql, ret='dict')
+        return self.fetchall()

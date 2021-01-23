@@ -1,6 +1,6 @@
 import pymysql
 import json
-from logger.logger import logger
+# from logger.logger import logger
 import os
 # 数据库基本操作封装类
 class BaseDao():
@@ -19,7 +19,7 @@ class BaseDao():
             # 自动提交事务
             # self.__connection.autocommit(False) # 事务管理的开关
         except Exception as e:
-            logger.error("数据库连接失败：" +  str(e))
+            # logger.error("数据库连接失败：" +  str(e))
             # print("数据库连接失败：" +  str(e))
             pass
         return self.__connection
@@ -38,7 +38,7 @@ class BaseDao():
             else:
                 result = self.__cursor.execute(sql)
         except Exception as e:
-            logger.error("数据库执行SQL语句出现异常：" + str(e))
+            # logger.error("数据库执行SQL语句出现异常：" + str(e))
             # print("数据库执行SQL语句出现异常：" + str(e))
             self.close()
             pass

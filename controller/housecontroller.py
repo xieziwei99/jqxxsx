@@ -27,3 +27,11 @@ def getProvincialCapitalAvgHouseArea():
     data = houseDao.statisticProvincialCapitalAvgHouseArea()
     return json.dumps(data,cls=DecimalEncoder) # 加上cls=DecimalEncoder引用DecimalEncouder
     pass
+
+
+@housecontroller.route('/house/getHouseNumberOfProvince')
+def getHouseNumberOfProvince():
+    house_dao = HouseDao()
+    some = house_dao.getHouseNumberOfProvince()
+    house_dao.close()
+    return jsonify(some)
