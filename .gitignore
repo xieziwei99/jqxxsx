@@ -2,3 +2,4 @@ log.log
 logger/log.log
 dao/lp.sql
 .idea
+dao/mysql.json

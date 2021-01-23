@@ -2,12 +2,14 @@ from flask import Flask, request, render_template,url_for, redirect
 from datetime import timedelta
 from dao.userdao import UserDao
 from controller.datacontroller import datacontroller
+from controller.housecontroller import housecontroller
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = "FLASKTESTPROJECT"
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30) # SESSION的超时时间
 app.register_blueprint(datacontroller)
+app.register_blueprint(housecontroller)
 
 @app.route('/')
 def index():

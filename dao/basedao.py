@@ -40,7 +40,7 @@ class BaseDao():
         except Exception as e:
             logger.error("数据库执行SQL语句出现异常：" + str(e))
             # print("数据库执行SQL语句出现异常：" + str(e))
-            self.__connection.close()
+            self.close()
             pass
         return result
         pass
