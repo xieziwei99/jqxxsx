@@ -53,7 +53,7 @@
                     grid: {
                         left: '2%',
                         top: '20%',
-                        right: '12%',
+                        right: '5%',
                         bottom: '0%',
                         containLabel: true
                     },
@@ -437,6 +437,7 @@
                                     color: "rgba(255,255,255,.6)",
                                     fontSize: '12',
                                 },
+                                // rotate: 90,
                             },
                     }],
                     yAxis: [{
